@@ -1,0 +1,38 @@
+name: Build IPA
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-14
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup Xcode
+        run: sudo xcode-select -s /Applications/Xcode_15.4.app
+
+      - name: Compile App
+        run: |
+          xcodebuild -project Mugunghwa.xcodeproj \
+                     -scheme Mugunghwa \
+                     -configuration Release \
+                     -sdk iphoneos \
+                     -derivedDataPath build \
+                     CODE_SIGNING_ALLOWED=NO \
+                     CODE_SIGNING_REQUIRED=NO \
+                     CODE_SIGN_IDENTITY="" \
+                     clean build
+
+      - name: Package into IPA
+        run: |
+          mkdir -p Payload
+          cp -r build/Build/Products/Release-iphoneos/Mugunghwa.app Payload/
+          zip -r Mugunghwa.ipa Payload
+
+      - name: Upload IPA
+        uses: actions/upload-artifact@v7
+        with:
+          name: Mugunghwa-Modified
+          path: Mugunghwa.ipa

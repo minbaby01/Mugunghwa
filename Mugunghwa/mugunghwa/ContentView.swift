@@ -14,9 +14,10 @@ struct ContentView: View {
     @State private var showingInstalling = false
     @State private var showingError = false
     @State private var showingSuccess = false
-    
+    @State private var selection = 1
+
     var body: some View {
-        TabView {
+        TabView(selection: $selection) {
             HomeView()
                 .tabItem {
                     Image(systemName: "house.fill")
@@ -28,6 +29,7 @@ struct ContentView: View {
                 .onReceive(error) { (output) in
                     showingError.toggle()
                 }
+                .tag(0)
             UtilityView()
                 .tabItem {
                     Image(systemName: "wrench.and.screwdriver.fill")
@@ -39,11 +41,13 @@ struct ContentView: View {
                 .onReceive(success) { (output) in
                     showingSuccess.toggle()
                 }
+                .tag(1)
             CreditsView()
                 .tabItem {
                     Image(systemName: "doc.plaintext.fill")
                     Text("Credits")
                 }
+                .tag(2)
         }
         .alert(isPresented: $showingInstalling) {
             Alert(title: Text("Installing"), message: Text("installing selected iconpack"), dismissButton: .default(Text("Okay")))
