@@ -16,7 +16,7 @@ jobs:
       - name: Compile App
         run: |
           xcodebuild -project Mugunghwa/mugunghwa.xcodeproj \
-                     -scheme Mugunghwa \
+                     -scheme mugunghwa \
                      -configuration Release \
                      -sdk iphoneos \
                      -derivedDataPath build \
@@ -28,11 +28,11 @@ jobs:
       - name: Package into IPA
         run: |
           mkdir -p Payload
-          cp -r build/Build/Products/Release-iphoneos/Mugunghwa.app Payload/
+          cp -r build/Build/Products/Release-iphoneos/*.app Payload/
           zip -r Mugunghwa.ipa Payload
 
       - name: Upload IPA
         uses: actions/upload-artifact@v7
         with:
-          name: Mugunghwa-Modified
+          name: Mugunghwa
           path: Mugunghwa.ipa
