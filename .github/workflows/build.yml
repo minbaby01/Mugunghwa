@@ -18,17 +18,17 @@ jobs:
           xcodebuild -project Mugunghwa/mugunghwa.xcodeproj \
                      -scheme mugunghwa \
                      -configuration Release \
-                     -sdk iphoneos \
+                     -sdk iphonesimulator \
                      -derivedDataPath build \
-                     CODE_SIGNING_ALLOWED=YES \
+                     CODE_SIGNING_ALLOWED=NO \
                      CODE_SIGNING_REQUIRED=NO \
-                     CODE_SIGN_IDENTITY="-" \
+                     CODE_SIGN_IDENTITY="" \
                      clean build
 
       - name: Package into IPA
         run: |
           mkdir -p Payload
-          cp -r build/Build/Products/Release-iphoneos/*.app Payload/
+          cp -r build/Build/Products/Release-iphonesimulator/*.app Payload/
           zip -r Mugunghwa.ipa Payload
 
       - name: Upload IPA
