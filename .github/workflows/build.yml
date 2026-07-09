@@ -20,9 +20,9 @@ jobs:
                      -configuration Release \
                      -sdk iphoneos \
                      -derivedDataPath build \
-                     CODE_SIGNING_ALLOWED=NO \
+                     CODE_SIGNING_ALLOWED=YES \
                      CODE_SIGNING_REQUIRED=NO \
-                     CODE_SIGN_IDENTITY="" \
+                     CODE_SIGN_IDENTITY="-" \
                      clean build
 
       - name: Package into IPA
