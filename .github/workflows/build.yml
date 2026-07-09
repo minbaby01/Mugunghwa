@@ -15,7 +15,7 @@ jobs:
 
       - name: Compile App
         run: |
-          xcodebuild -project Mugunghwa.xcodeproj \
+          xcodebuild -project Mugunghwa/mugunghwa.xcodeproj \
                      -scheme Mugunghwa \
                      -configuration Release \
                      -sdk iphoneos \
